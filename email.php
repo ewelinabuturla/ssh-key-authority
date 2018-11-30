@@ -201,18 +201,7 @@ class Email {
 				}
 			}
 		}
-		$message .= "Subject: ".$this->header_7bit_safe($this->subject, 9)."\r\n\r\n";
-		$message .= "--{$innerboundary}\r\n".implode("\r\n", $localheaders)."\r\n\r\n".implode("\r\n", $lines)."\r\n--{$innerboundary}--\r\n";
-		$signature = $this->get_gpg_signature($message);
-		$message = "This is an OpenPGP/MIME signed message (RFC 4880 and 3156)\r\n--{$boundary}\r\n{$message}\r\n--{$boundary}\r\n";
-		$message .= "Content-Type: application/pgp-signature; name=\"signature.asc\"\r\n";
-		$message .= "Content-Description: OpenPGP digital signature\r\n";
-		$message .= "Content-Disposition: attachment; filename=\"signature.asc\"\r\n\r\n";
-		$message .= $signature;
-		$message .= "\r\n--$boundary--";
-		$this->body = $message;
 	}
-
 	private function get_gpg_signature($message) {
 		global $config;
 		$gpg = new gnupg();
